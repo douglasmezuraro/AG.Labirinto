@@ -29,8 +29,8 @@ public class Grafo {
         this.vertices = vertices;
     }
     
-    Vertice addVertice(String nome) {
-        Vertice v = new Vertice(nome);
+    Vertice addVertice(int valor) {
+        Vertice v = new Vertice(valor);
         this.vertices.add(v);
         return v;
     }
