@@ -8,6 +8,8 @@ public class Tela {
         Jogo jogo = new Jogo();
         
         jogo.iniciar();
+        
+        System.out.println(jogo.labirinto.toString());
     }
     
 }

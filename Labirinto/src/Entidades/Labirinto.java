@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Labirinto {
     
-    public final int length = 50;
+    public final int length = 5;
     private final Vertice[][] matriz;
     private Vertice inicio;
     
@@ -38,6 +38,20 @@ public class Labirinto {
 
     public Vertice[][] getMatriz() {
         return matriz;
+    }
+    
+    @Override
+    public String toString() {
+        String str = "";
+        
+        for(int i = 0; i < matriz.length; i++) {
+            for(int j = 0; j < matriz.length; j++) 
+                str = str + matriz[i][j].getValor() + "|";
+            
+            str = str + "\n";
+        }
+        
+        return str;
     }
     
 }
