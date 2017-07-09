@@ -9,12 +9,12 @@ public class Grafo {
     private List<Vertice> vertices;
 
     Grafo() {
-        this.arestas = new ArrayList<>();
-        this.vertices = new ArrayList<>();
+        arestas = new ArrayList<>();
+        vertices = new ArrayList<>();
     }
     
     public List<Aresta> getArestas() {
-        return this.arestas;
+        return arestas;
     }
 
     public void setArestas(List<Aresta> arestas) {
@@ -22,7 +22,7 @@ public class Grafo {
     }
 
     public List<Vertice> getVertices() {
-        return this.vertices;
+        return vertices;
     }
 
     public void setVertices(List<Vertice> vertices) {
@@ -31,13 +31,13 @@ public class Grafo {
     
     Vertice addVertice(int valor) {
         Vertice v = new Vertice(valor);
-        this.vertices.add(v);
+        vertices.add(v);
         return v;
     }
     
     Aresta addAresta(Vertice origem, Vertice destino) {
         Aresta a = new Aresta(origem, destino);
-        this.arestas.add(a);
+        arestas.add(a);
         return a;
     }
 

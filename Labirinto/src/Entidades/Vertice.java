@@ -11,12 +11,12 @@ public class Vertice {
     
     Vertice(int valor) {
         this.valor = valor;
-        this.cor = Cor.Branco;
-        this.adj = new ArrayList<>();
+        cor = Cor.Branco;
+        adj = new ArrayList<>();
     }
 
     public int getValor() {
-        return this.valor;
+        return valor;
     }
 
     public void setValor(int valor) {
@@ -24,7 +24,7 @@ public class Vertice {
     }
         
     public Cor getCor() {
-        return this.cor;
+        return cor;
     }
 
     public void setCor(Cor cor) {
@@ -32,7 +32,7 @@ public class Vertice {
     }
     
     public List<Vertice> getAdj() {
-        return this.adj;
+        return adj;
     }
     
     public void setAdj(List<Vertice> adj) {
@@ -40,7 +40,7 @@ public class Vertice {
     }
     
     public void add(Vertice v) {
-        this.adj.add(v);
+        adj.add(v);
     }
         
 }
