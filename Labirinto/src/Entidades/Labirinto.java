@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Labirinto {
@@ -8,9 +10,10 @@ public class Labirinto {
     private final Vertice[][] matriz;
     private Vertice inicio;
     
-    Labirinto() {
+    public Labirinto() {
         matriz = new Vertice[length][length];   
         criarVertices();
+        setVerticesAdjacentes();
         setVerticeInicial();
     }
     
@@ -40,13 +43,44 @@ public class Labirinto {
         return matriz;
     }
     
+    private void setVerticesAdjacentes() {
+        for(int l = 0; l < matriz.length; l++) {
+            for(int c = 0; c < matriz.length; c++) {
+                matriz[l][c].setAdj(getAdjByPos(l, c));
+            }
+        }
+    }
+    
+    private List<Vertice> getAdjByPos(int linha, int coluna) {
+        
+        List<Vertice> adj = new ArrayList<>();
+        
+        // cima
+        if(linha >= 1)
+            adj.add(matriz[linha - 1][coluna]);
+       
+        // baixo
+        if(linha < matriz.length - 1)
+            adj.add(matriz[linha + 1][coluna]);
+        
+        // esq
+        if(coluna >= 1)
+            adj.add(matriz[linha][coluna - 1]);
+        
+        // dir
+        if(coluna < matriz.length - 1)
+            adj.add(matriz[linha][coluna + 1]);
+        
+        return adj;
+    }
+    
     @Override
     public String toString() {
         String str = "";
         
-        for(int i = 0; i < matriz.length; i++) {
-            for(int j = 0; j < matriz.length; j++) 
-                str = str + matriz[i][j].getValor() + "|";
+        for(int l = 0; l < matriz.length; l++) {
+            for(int c = 0; c < matriz.length; c++) 
+                str = str + matriz[l][c].getValor() + "|";
             
             str = str + "\n";
         }

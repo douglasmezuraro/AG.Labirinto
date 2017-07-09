@@ -1,15 +1,13 @@
 package Fronteira;
 
-import Entidades.Jogo;
+import Entidades.Labirinto;
 
 public class Tela {
 
     public static void main(String[] args) {
-        Jogo jogo = new Jogo();
+        Labirinto labirinto = new Labirinto();
         
-        jogo.iniciar();
-        
-        System.out.println(jogo.labirinto.toString());
+        System.out.println(labirinto.toString());
     }
     
 }
