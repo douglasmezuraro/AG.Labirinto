@@ -5,46 +5,39 @@ import java.util.Random;
 public class Labirinto {
     
     public final int length = 50;
-    private int ultimoValor;
-    private Vertice[][] matriz;
+    private final Vertice[][] matriz;
     private Vertice inicio;
-
+    
     Labirinto() {
-        matriz = new Vertice[length][length];        
-        inicio = addVerticeInicial();
-        ultimoValor = inicio.getValor();
+        matriz = new Vertice[length][length];   
+        criarVertices();
+        setVerticeInicial();
     }
     
-    public Vertice getInicio() {
+    private void criarVertices() {
+        for(int i = 0; i < length; i++)
+            for(int j = 0; j < length; j++)
+                matriz[i][j] = new Vertice(0);
+    }
+    
+    public Vertice getVerticeInicial() {
         return inicio;
     }
-
-    public void setInicio(Vertice inicio) {
-        this.inicio = inicio;
-    }                
     
-    Vertice addVerticeInicial() {
-        Vertice v = new Vertice(1);
+    private void setVerticeInicial() {
         Random r = new Random();
         
-        int i = r.nextInt(length),
-            j = r.nextInt(length);
+        final int i = r.nextInt(length),
+                  j = r.nextInt(length);
         
-        matriz[i][j] = v;
+        matriz[i][j].setValor(1);
+        matriz[i][j].setCor(Cor.Cinza);
         
-        return v;
+        inicio = matriz[i][j];
     }
 
     public Vertice[][] getMatriz() {
         return matriz;
-    }
-
-    public int getUltimoValor() {
-        return ultimoValor;
-    }
-
-    public void setUltimoValor(int ultimoValor) {
-        this.ultimoValor = ultimoValor;
     }
     
 }

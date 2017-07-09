@@ -7,7 +7,7 @@ public class Vertice {
     
     private int valor; 
     private Cor cor;
-    private List<Aresta> adj;
+    private List<Vertice> adj;
     
     Vertice(int valor) {
         this.valor = valor;
@@ -31,16 +31,16 @@ public class Vertice {
         this.cor = cor;
     }
     
-    public List<Aresta> getAdj() {
+    public List<Vertice> getAdj() {
         return this.adj;
     }
     
-    public void setAdj(List<Aresta> adj) {
+    public void setAdj(List<Vertice> adj) {
         this.adj = adj;
     }
     
-    public void add(Aresta a) {
-        this.adj.add(a);
+    public void add(Vertice v) {
+        this.adj.add(v);
     }
         
 }

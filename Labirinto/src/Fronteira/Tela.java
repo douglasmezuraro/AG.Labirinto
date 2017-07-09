@@ -1,9 +1,13 @@
 package Fronteira;
 
+import Entidades.Jogo;
+
 public class Tela {
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        Jogo jogo = new Jogo();
+        
+        jogo.iniciar();
     }
     
 }
