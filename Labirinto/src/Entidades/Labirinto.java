@@ -7,18 +7,16 @@ import java.util.Random;
 
 public class Labirinto {
     
-    public final int length = 5;
+    public final int length = 7;
     private final Vertice[][] matriz;
     private Vertice inicio;
-    private Stack<Vertice> caminho;
+    private int ultimoValor;
     
     public Labirinto() {
         matriz = new Vertice[length][length];
-        caminho = new Stack<>();
         criarVertices();
         setVerticesAdjacentes();
         setVerticeInicial();
-        caminho.push(inicio);
     }
     
     /**
@@ -52,6 +50,7 @@ public class Labirinto {
         matriz[i][j].setCor(Cor.Cinza);
         
         inicio = matriz[i][j];
+        ultimoValor = inicio.getValor();
     }
 
     /**
@@ -103,27 +102,25 @@ public class Labirinto {
         return adj;
     }   
     
-    public Boolean jogar() {
-
-        for(Vertice destino: caminho.peek().getAdj()) {
-            if(jogar(caminho.peek(), destino)) {
-                destino.setValor(caminho.peek().getValor() + 1);
-                caminho.push(destino);
-                return true;
+    public void jogar(Vertice v) {
+        for(Vertice adj: v.getAdj()) {
+            if(jogar(v, adj)) {
+                adj.setValor(ultimoValor);
+                ultimoValor = adj.getValor() + 1;
+                jogar(adj);
             }
         }
-        
-        return false;
     }
     
-    private Boolean jogar(Vertice origem, Vertice destino) {
-        for(Vertice a: destino.getAdj()) {
-            if((!a.equals(origem)) && (!a.equals(destino)) && (a.getValor() <= 0)) {
-                return true;
+    private Boolean jogar(Vertice o, Vertice d) {
+        for(Vertice a: d.getAdj()) {
+            if(!a.equals(o)) {
+                if (a.getValor() > 0) 
+                    return false;
             }
         }
   
-        return false;
+        return true;
     }
    
     /** 
@@ -151,12 +148,18 @@ public class Labirinto {
         String str = "";
         
         for(int l = 0; l < matriz.length; l++) {
-            for(int c = 0; c < matriz.length; c++) 
-                str = str + matriz[l][c].getValor() + " | ";
-            
-            str = str + "\n";
-            
-        }
+            for(int c = 0; c < matriz.length; c++) {
+                int aux = matriz[l][c].getValor();
+                
+                if(aux == 0) 
+                    str = str + "  |";
+                else if(aux < 10)
+                    str = str + aux + " |";
+                else 
+                    str = str + aux + "|";
+            }            
+            str = str + "\n";            
+        }        
         
         return str;
     }
