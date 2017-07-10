@@ -2,6 +2,7 @@ package Entidades;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Vertice {
     
@@ -36,6 +37,7 @@ public class Vertice {
     }
     
     public void setAdj(List<Vertice> adj) {
+        Collections.shuffle(adj);
         this.adj = adj;
     }
     

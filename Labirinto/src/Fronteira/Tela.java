@@ -7,6 +7,8 @@ public class Tela {
     public static void main(String[] args) {
         Labirinto labirinto = new Labirinto();
         
+        labirinto.jogar();
+        
         System.out.println(labirinto.toString());
     }
     
