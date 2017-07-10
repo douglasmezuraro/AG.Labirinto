@@ -102,24 +102,33 @@ public class Labirinto {
         return adj;
     }   
     
-    public void jogar(Vertice v) {
+    /**
+     * Este método encontra os caminhos possíveis a partir de um vertice v de maneira
+     * recursiva através de seus adjacentes
+     * @param v 
+     */
+    public void encontrarCaminhos(Vertice v) {
         for(Vertice adj: v.getAdj()) {
-            if(jogar(v, adj)) {
+            if(validarCaminho(v, adj)) {
                 adj.setValor(ultimoValor);
                 ultimoValor = adj.getValor() + 1;
-                jogar(adj);
+                encontrarCaminhos(adj);
             }
         }
     }
     
-    private Boolean jogar(Vertice o, Vertice d) {
-        for(Vertice a: d.getAdj()) {
-            if(!a.equals(o)) {
+    /**
+     * Este método valida se é possivel chegar do vértice origem até o vérticr
+     * candidato respeitando as regras do jogo.
+     * @param origem
+     * @param candidato
+     * @return Boolean que é o resultado da tentativa.
+     */
+    private Boolean validarCaminho(Vertice origem, Vertice candidato) {
+        for(Vertice a: candidato.getAdj()) 
+            if(!a.equals(origem)) 
                 if (a.getValor() > 0) 
-                    return false;
-            }
-        }
-  
+                    return false;        
         return true;
     }
    
