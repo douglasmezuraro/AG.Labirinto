@@ -18,6 +18,8 @@ public class Labirinto {
         grafo.setVertices(criarVertices());
         
         setVerticesAdjacentes();
+        
+        ultimoValor = 0;
     }
     
     /**
@@ -89,16 +91,23 @@ public class Labirinto {
      * @param u 
      */
     private void encontrarCaminhos(Vertice u) {
+        ultimoValor++;
+        u.setCor(Cor.Cinza);
+        
         for(Vertice v: u.getAdj()) {
-            v.setAntecessor(u);
-            
-            if(validarCaminho(v)) {
-                v.setValor(ultimoValor + 1);
-                ultimoValor = v.getValor();
-                
-                encontrarCaminhos(v);
-            }
+            if(v.getCor() == Cor.Branco) {
+                v.setAntecessor(u);
+
+                if(validarCaminho(v)) {
+                    v.setValor(ultimoValor);
+
+                    encontrarCaminhos(v);
+                }
+            }               
         }
+        
+        u.setCor(Cor.Preto);
+        ultimoValor++;
     }
     
     /**
@@ -114,21 +123,6 @@ public class Labirinto {
                 if (v.getValor() > 0) 
                     return false;        
         return true;
-    }
-   
-    /** 
-     * Método que percorre a matriz verificando se encontra a mesma instância
-     * do vértice passado como parâmetro e retorna sua coordenada.
-     * @param vertice
-     * @return Coordenada caso encontre e null caso contrário.
-     */
-    private Coordenada getCoordenadaVertice(Vertice vertice) {
-        for(int l = 0; l < matriz.length; l++) 
-            for(int c = 0; c < matriz.length; c++) 
-                if(matriz[l][c].equals(vertice))
-                    return new Coordenada(l, c);
-
-        return null;
     }
             
     public void jogar() {
