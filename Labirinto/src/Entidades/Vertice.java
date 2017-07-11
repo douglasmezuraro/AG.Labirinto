@@ -9,6 +9,7 @@ public class Vertice {
     private int valor; 
     private Cor cor;
     private List<Vertice> adj;
+    private Vertice antecessor;
     
     Vertice(int valor) {
         this.valor = valor;
@@ -44,5 +45,14 @@ public class Vertice {
     public void add(Vertice v) {
         adj.add(v);
     }
+
+    public Vertice getAntecessor() {
+        return antecessor;
+    }
+
+    public void setAntecessor(Vertice antecessor) {
+        this.antecessor = antecessor;
+    }
         
+    
 }

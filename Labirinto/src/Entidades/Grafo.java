@@ -2,6 +2,7 @@ package Entidades;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grafo {
     
@@ -39,6 +40,13 @@ public class Grafo {
         Aresta a = new Aresta(origem, destino);
         arestas.add(a);
         return a;
+    }
+    
+    // Utéis
+    
+    public Vertice getRamdomVertice() {
+        Collections.shuffle(vertices);
+        return vertices.get(0);
     }
 
 }

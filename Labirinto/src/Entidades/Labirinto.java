@@ -2,55 +2,36 @@ package Entidades;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Stack;
-import java.util.Random;
 
 public class Labirinto {
     
     public final int length = 7;
     private final Vertice[][] matriz;
-    private Vertice inicio;
+    private final Grafo grafo;
     private int ultimoValor;
+    
     
     public Labirinto() {
         matriz = new Vertice[length][length];
-        criarVertices();
+        grafo = new Grafo();
+      
+        grafo.setVertices(criarVertices());
+        
         setVerticesAdjacentes();
-        setVerticeInicial();
     }
     
     /**
      * Método que percorre a matriz inteira instânciado os vértices com valor 0
      */
-    private void criarVertices() {
-        for(int l = 0; l < length; l++)
-            for(int c = 0; c < length; c++)
+    private List<Vertice> criarVertices() {
+        List<Vertice> lista = new ArrayList<>();        
+        for(int l = 0; l < length; l++) {
+            for(int c = 0; c < length; c++) {
                 matriz[l][c] = new Vertice(0);
-    }
-    
-    /**
-     * Retorna o vértice que é o início do jogo
-     * @return Vertice
-     */
-    public Vertice getVerticeInicial() {
-        return inicio;
-    }
-    
-    /**
-     * Escolhe um vértice aleatório e seta ele como vértice da qual o jogo
-     * começa. Esta vértice é iniciado com valor igual a 1.
-     */
-    private void setVerticeInicial() {
-        Random r = new Random();
-        
-        final int i = r.nextInt(length),
-                  j = r.nextInt(length);
-        
-        matriz[i][j].setValor(1);
-        matriz[i][j].setCor(Cor.Cinza);
-        
-        inicio = matriz[i][j];
-        ultimoValor = inicio.getValor();
+                lista.add(matriz[l][c]);
+            }
+        }
+        return lista;
     }
 
     /**
@@ -105,14 +86,17 @@ public class Labirinto {
     /**
      * Este método encontra os caminhos possíveis a partir de um vertice v de maneira
      * recursiva através de seus adjacentes
-     * @param v 
+     * @param u 
      */
-    public void encontrarCaminhos(Vertice v) {
-        for(Vertice adj: v.getAdj()) {
-            if(validarCaminho(v, adj)) {
-                adj.setValor(ultimoValor);
-                ultimoValor = adj.getValor() + 1;
-                encontrarCaminhos(adj);
+    private void encontrarCaminhos(Vertice u) {
+        for(Vertice v: u.getAdj()) {
+            v.setAntecessor(u);
+            
+            if(validarCaminho(v)) {
+                v.setValor(ultimoValor + 1);
+                ultimoValor = v.getValor();
+                
+                encontrarCaminhos(v);
             }
         }
     }
@@ -121,13 +105,13 @@ public class Labirinto {
      * Este método valida se é possivel chegar do vértice origem até o vérticr
      * candidato respeitando as regras do jogo.
      * @param origem
-     * @param candidato
+     * @param u
      * @return Boolean que é o resultado da tentativa.
      */
-    private Boolean validarCaminho(Vertice origem, Vertice candidato) {
-        for(Vertice a: candidato.getAdj()) 
-            if(!a.equals(origem)) 
-                if (a.getValor() > 0) 
+    private Boolean validarCaminho(Vertice u) {
+        for(Vertice v: u.getAdj()) 
+            if(!v.equals(u.getAntecessor())) 
+                if (v.getValor() > 0) 
                     return false;        
         return true;
     }
@@ -147,6 +131,10 @@ public class Labirinto {
         return null;
     }
             
+    public void jogar() {
+        encontrarCaminhos(grafo.getRamdomVertice());
+    }
+    
     /**
      * Método que retorna uma representação gráfica do labirinto na forma de 
      * uma String
