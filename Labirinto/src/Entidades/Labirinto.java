@@ -91,32 +91,25 @@ public class Labirinto {
      * @param u 
      */
     private void encontrarCaminhos(Vertice u) {
-        ultimoValor++;
+        
         u.setCor(Cor.Cinza);
         
         for(Vertice v: u.getAdj()) {
             if(v.getCor() == Cor.Branco) {
-                v.setAntecessor(u);
+                v.setAntecessor(u); 
 
                 if(validarCaminho(v)) {
+                    ultimoValor++;
                     v.setValor(ultimoValor);
 
                     encontrarCaminhos(v);
                 }
             }               
         }
-        
+
         u.setCor(Cor.Preto);
-        ultimoValor++;
     }
     
-    /**
-     * Este método valida se é possivel chegar do vértice origem até o vérticr
-     * candidato respeitando as regras do jogo.
-     * @param origem
-     * @param u
-     * @return Boolean que é o resultado da tentativa.
-     */
     private Boolean validarCaminho(Vertice u) {
         for(Vertice v: u.getAdj()) 
             if(!v.equals(u.getAntecessor())) 
