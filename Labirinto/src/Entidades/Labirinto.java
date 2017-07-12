@@ -8,8 +8,7 @@ public class Labirinto {
     public final int length = 7;
     private final Vertice[][] matriz;
     private final Grafo grafo;
-    
-    
+        
     public Labirinto() {
         matriz = new Vertice[length][length];
         grafo = new Grafo();
@@ -28,10 +27,6 @@ public class Labirinto {
             }
         }
         return lista;
-    }
-
-    public Vertice[][] getMatriz() {
-        return matriz;
     }
     
     private void setVerticesAdjacentes() {
