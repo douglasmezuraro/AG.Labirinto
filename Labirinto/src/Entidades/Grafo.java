@@ -8,10 +8,12 @@ public class Grafo {
     
     private List<Aresta> arestas;
     private List<Vertice> vertices;
+    private int valor;
 
     Grafo() {
         arestas = new ArrayList<>();
         vertices = new ArrayList<>();
+        valor = 0;
     }
     
     public List<Aresta> getArestas() {
@@ -47,6 +49,46 @@ public class Grafo {
     public Vertice getRamdomVertice() {
         Collections.shuffle(vertices);
         return vertices.get(0);
+    }
+    
+    // Algoritmos
+    
+    public void dfs() {
+        for(Vertice u: vertices) {
+            u.setCor(Cor.Branco);
+            u.setAntecessor(null);
+        }
+        
+        valor = 0;
+        
+        for(Vertice v: vertices) {
+            if(v.getCor() == Cor.Branco)
+                dfsVisit(v);
+        }
+    }
+    
+    private void dfsVisit(Vertice u) {
+        u.setCor(Cor.Cinza);
+        
+        for(Vertice v: u.getAdj()) {
+            if(v.getCor() == Cor.Branco) {
+                v.setAntecessor(u); 
+
+                if(validarJogada(v)) {
+                    valor++;
+                    v.setValor(valor);
+                    dfsVisit(v);
+                }
+            }               
+        }
+    }
+    
+    private Boolean validarJogada(Vertice u) {
+        for(Vertice v: u.getAdj()) 
+            if(!v.equals(u.getAntecessor())) 
+                if (v.getValor() > 0) 
+                    return false;        
+        return true;
     }
 
 }

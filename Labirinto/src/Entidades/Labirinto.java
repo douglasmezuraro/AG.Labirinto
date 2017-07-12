@@ -8,7 +8,6 @@ public class Labirinto {
     public final int length = 7;
     private final Vertice[][] matriz;
     private final Grafo grafo;
-    private int ultimoValor;
     
     
     public Labirinto() {
@@ -18,13 +17,8 @@ public class Labirinto {
         grafo.setVertices(criarVertices());
         
         setVerticesAdjacentes();
-        
-        ultimoValor = 0;
     }
     
-    /**
-     * Método que percorre a matriz inteira instânciado os vértices com valor 0
-     */
     private List<Vertice> criarVertices() {
         List<Vertice> lista = new ArrayList<>();        
         for(int l = 0; l < length; l++) {
@@ -36,17 +30,10 @@ public class Labirinto {
         return lista;
     }
 
-    /**
-     * Este método é usado para ter acesso não direto à matriz.
-     * @return Matriz de vértices 
-     */
     public Vertice[][] getMatriz() {
         return matriz;
     }
     
-    /**
-     * Para cada vértice na matriz de vértice é setado sua lista de adjacentes.
-     */
     private void setVerticesAdjacentes() {
         for(int l = 0; l < matriz.length; l++) {
             for(int c = 0; c < matriz.length; c++) {
@@ -55,14 +42,6 @@ public class Labirinto {
         }
     }
     
-    /**
-     * Método que retorna uma lista de vértices adjacentes ao vétice que está
-     * na matriz na posicão matriz[linha][coluna], que de acordo com a regra
-     * são os vértices de cima, baixo, direita e esquerda.
-     * @param linha
-     * @param coluna
-     * @return Lista de vértices adjacentes 
-     */
     private List<Vertice> getAdjByPos(int linha, int coluna) {
         List<Vertice> adj = new ArrayList<>();
         
@@ -84,49 +63,11 @@ public class Labirinto {
         
         return adj;
     }   
-    
-    /**
-     * Este método encontra os caminhos possíveis a partir de um vertice v de maneira
-     * recursiva através de seus adjacentes
-     * @param u 
-     */
-    private void encontrarCaminhos(Vertice u) {
-        
-        u.setCor(Cor.Cinza);
-        
-        for(Vertice v: u.getAdj()) {
-            if(v.getCor() == Cor.Branco) {
-                v.setAntecessor(u); 
-
-                if(validarCaminho(v)) {
-                    ultimoValor++;
-                    v.setValor(ultimoValor);
-
-                    encontrarCaminhos(v);
-                }
-            }               
-        }
-
-        u.setCor(Cor.Preto);
-    }
-    
-    private Boolean validarCaminho(Vertice u) {
-        for(Vertice v: u.getAdj()) 
-            if(!v.equals(u.getAntecessor())) 
-                if (v.getValor() > 0) 
-                    return false;        
-        return true;
-    }
             
-    public void jogar() {
-        encontrarCaminhos(grafo.getRamdomVertice());
+    public void criarCaminho() {
+        grafo.dfs();
     }
     
-    /**
-     * Método que retorna uma representação gráfica do labirinto na forma de 
-     * uma String
-     * @return Labirinto em String
-     */
     @Override
     public String toString() {
         String str = "";
