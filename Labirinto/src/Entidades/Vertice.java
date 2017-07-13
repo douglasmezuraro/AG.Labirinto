@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Vertice {
-    
+        
     private int valor; 
+    private int d;
     private Cor cor;
     private List<Vertice> adj;
     private Vertice antecessor;
@@ -51,6 +52,15 @@ public class Vertice {
     public void setAntecessor(Vertice antecessor) {
         this.antecessor = antecessor;
     }
+
+    public int getD() {
+        return d;
+    }
+
+    public void setD(int d) {
+        this.d = d;
+    }
         
+    
     
 }

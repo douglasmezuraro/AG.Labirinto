@@ -2,17 +2,20 @@ package Entidades;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Grafo {
+public class Grafo {    
     
+    public final int infinito = -1;
     private List<Aresta> arestas;
-    private List<Vertice> vertices;
-    private int valor;
+    private List<Vertice> vertices;    
+    int d;
 
     Grafo() {
         arestas = new ArrayList<>();
         vertices = new ArrayList<>();
-        valor = 0;
     }
     
     public List<Aresta> getArestas() {
@@ -51,7 +54,7 @@ public class Grafo {
             u.setAntecessor(null);
         }
         
-        valor = 0;
+        d = 0;
         
         for(Vertice v: vertices) {
             if(v.getCor() == Cor.Branco)
@@ -67,8 +70,8 @@ public class Grafo {
                 v.setAntecessor(u); 
 
                 if(validarJogada(v)) {
-                    valor++;
-                    v.setValor(valor);
+                    d++;
+                    v.setValor(d);
                     dfsVisit(v);
                 }
             }               
@@ -81,6 +84,43 @@ public class Grafo {
                 if (v.getValor() > 0) 
                     return false;        
         return true;
+    }
+    
+    public void bfs() {
+        Collections.shuffle(vertices);
+        bfs(vertices.get(0));
+    }
+    
+    private void bfs(Vertice s) {
+        for(Vertice v: vertices) {
+            if(!v.equals(v)) {
+                v.setD(infinito);
+                v.setAntecessor(null);
+                v.setCor(Cor.Branco);                
+            }            
+        }
+        
+        s.setD(0);
+        s.setAntecessor(null);
+        s.setCor(Cor.Cinza);
+        
+        Queue<Vertice> q = new LinkedList<>();        
+        q.add(s);
+        
+        while(!q.isEmpty()) {
+            Vertice u = q.remove();
+            
+            for(Vertice v: u.getAdj()) {
+                if(v.getCor() == Cor.Branco) {
+                    v.setD(u.getD() + 1);
+                    v.setAntecessor(u);
+                    v.setCor(Cor.Cinza);
+                    q.add(v);
+                }
+            }
+            
+            u.setCor(Cor.Preto);
+        }                
     }
 
 }
