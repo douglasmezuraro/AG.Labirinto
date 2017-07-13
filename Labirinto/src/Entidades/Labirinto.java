@@ -64,7 +64,7 @@ public class Labirinto {
         grafo.dfs();
     }
     
-    public Point getCoordenada(Vertice u) {
+    private Point getPosicaoByVertice(Vertice u) {
         for(int l = 0; l < matriz.length; l++) {
             for(int c = 0; c < matriz.length; c++) {
                 if(matriz.equals(u))
@@ -72,6 +72,27 @@ public class Labirinto {
             }
         }
         return null;
+    }
+    
+    private Vertice getVerticeByPosicao(Point p){
+        if(posicaoExiste(p))
+            return matriz[p.x][p.y];
+        else
+            return null;
+    }
+    
+    private boolean posicaoExiste(Point p) {
+        return (p.x >= 0) 
+            && (p.y >= 0)
+            && (p.x <= matriz.length)
+            && (p.y <= matriz.length);
+    }
+    
+    private Vertice getVerticeCima(Vertice u) {
+        Point vertice = getPosicaoByVertice(u);
+        Point Cima = new Point(vertice.x - 1, vertice.y);
+        
+        return getVerticeByPosicao(Cima);
     }
     
     @Override
