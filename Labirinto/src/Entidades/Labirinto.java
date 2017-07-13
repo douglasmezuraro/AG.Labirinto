@@ -2,27 +2,38 @@ package Entidades;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.Point;
 
 public class Labirinto {
     
-    public final int length = 7;
+    private enum Direcao {
+        cima,
+        baixo,
+        direita,
+        esquerda;
+    }
+    
     private final Vertice[][] matriz;
     private final Grafo grafo;
     
-    public Labirinto() {
-        matriz = new Vertice[length][length];
+    public Labirinto(int tamanho) {
+        matriz = new Vertice[tamanho][tamanho];
         grafo = new Grafo();
       
         grafo.setVertices(criarVertices());
         
-        setVerticesAdjacentes();
+        addAdjacentes();
+    }
+    
+    public void criarCaminho() {
+        grafo.dfs();
     }
     
     private List<Vertice> criarVertices() {
         List<Vertice> lista = new ArrayList<>();        
-        for(int l = 0; l < length; l++) {
-            for(int c = 0; c < length; c++) {
+        for(int l = 0; l < matriz.length; l++) {
+            for(int c = 0; c < matriz.length; c++) {
                 matriz[l][c] = new Vertice(0);
                 lista.add(matriz[l][c]);
             }
@@ -30,44 +41,30 @@ public class Labirinto {
         return lista;
     }
     
-    private void setVerticesAdjacentes() {
-        for(int l = 0; l < matriz.length; l++) {
-            for(int c = 0; c < matriz.length; c++) {
-                matriz[l][c].setAdj(getAdjByPos(new Point(l, c)));
-            }
-        }
+    private void addAdjacentes() {
+        for(int l = 0; l < matriz.length; l++) 
+            for(int c = 0; c < matriz.length; c++) 
+                matriz[l][c].setAdj(getAdjacentes(matriz[l][c]));
     }
     
-    private List<Vertice> getAdjByPos(Point p) {
+    private List<Vertice> getAdjacentes(Vertice u) {
         List<Vertice> adj = new ArrayList<>();
         
-        // Vértice de cima
-        if(p.x >= 1) 
-            adj.add(matriz[p.x - 1][p.y]);
-       
-        // Vértice de baixo
-        if(p.x < matriz.length - 1) 
-            adj.add(matriz[p.x + 1][p.y]);
-        
-        // Vértice da esquerda
-        if(p.y >= 1) 
-            adj.add(matriz[p.x][p.y - 1]);
-        
-        // Vérice da Direita
-        if(p.y < matriz.length - 1)
-            adj.add(matriz[p.x][p.y + 1]);
-        
-        return adj;
-    }   
+        for(Direcao direcao: Direcao.values()) {
+            Vertice v = getVerticeByDirecao(u, direcao);
             
-    public void criarCaminho() {
-        grafo.dfs();
+            if(v != null)
+               adj.add(v);        
+        }
+        
+        Collections.shuffle(adj);
+        return adj;        
     }
-    
-    private Point getPosicaoByVertice(Vertice u) {
+                
+    private Point getPosicaoVertice(Vertice u) {
         for(int l = 0; l < matriz.length; l++) {
             for(int c = 0; c < matriz.length; c++) {
-                if(matriz.equals(u))
+                if(matriz[l][c].equals(u))
                     return new Point(l, c);
             }
         }
@@ -84,15 +81,32 @@ public class Labirinto {
     private boolean posicaoExiste(Point p) {
         return (p.x >= 0) 
             && (p.y >= 0)
-            && (p.x <= matriz.length)
-            && (p.y <= matriz.length);
+            && (p.x < matriz.length)
+            && (p.y < matriz.length);
     }
-    
-    private Vertice getVerticeCima(Vertice u) {
-        Point vertice = getPosicaoByVertice(u);
-        Point Cima = new Point(vertice.x - 1, vertice.y);
+      
+    private Vertice getVerticeByDirecao(Vertice u, Direcao direcao) {
+        Point origem = getPosicaoVertice(u),
+              destino = null;
         
-        return getVerticeByPosicao(Cima);
+        if(origem != null) {
+            switch(direcao) {
+                case cima: 
+                    destino = new Point(origem.x - 1, origem.y);
+                    break;
+                case baixo:
+                    destino = new Point(origem.x + 1, origem.y);
+                    break;
+                case direita:
+                    destino = new Point(origem.x, origem.y + 1);
+                    break;
+                case esquerda:
+                    destino = new Point(origem.x, origem.y - 1);
+                    break;
+            }
+            return getVerticeByPosicao(destino);
+        }
+        else return null;
     }
     
     @Override
