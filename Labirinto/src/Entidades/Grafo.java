@@ -121,10 +121,8 @@ public class Grafo {
             else
                aux = aux + separator + pilha.pop();
         }
-        
-        aux = aux + end;
-        
-        return aux;
+               
+        return aux + end;
     }
     
     private void acharCaminho(Stack pilha, Vertice origem, Vertice destino) {
@@ -136,5 +134,15 @@ public class Grafo {
             acharCaminho(pilha, origem, destino.antecessor);
             pilha.add(destino.valor);
         }  
+    }
+    
+    public Vertice verticeDeMaiorValor() {
+        Vertice u = new Vertice();
+        
+        for(Vertice v: vertices) 
+            if(v.valor > u.valor)
+                u = v;
+        
+        return u;
     }
 }

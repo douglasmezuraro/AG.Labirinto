@@ -115,26 +115,6 @@ public class Labirinto {
         return null;
     }
     
-    @Override
-    public String toString() {
-        String labirinto = "";
-        for(int l = 0; l < matriz.length; l++) {
-            for(int c = 0; c < matriz.length; c++) {
-                int aux = matriz[l][c].valor;
-                          
-                if(aux == 0)                   
-                    labirinto = labirinto + "  |";
-                else if(aux < 10)
-                    labirinto = labirinto + aux + " |";
-                else 
-                    labirinto = labirinto + aux + "|";
-            }            
-            labirinto = labirinto + "\n";            
-        }        
-        
-        return labirinto; 
-    }
-    
     public String getCaminho(int origem, int destino) {
         return getCaminho(getVertice(origem), getVertice(destino));
     }
@@ -142,6 +122,29 @@ public class Labirinto {
     private String getCaminho(Vertice origem, Vertice destino) {
         return grafo.getCaminho(origem, destino);
     }
+    
+    @Override
+    public String toString() {
+        String labirinto = "";
+        int lenghtMaior = String.valueOf(grafo.verticeDeMaiorValor().valor).length();
+        
+        for(int l = 0; l < matriz.length; l++) {
+            for(int c = 0; c < matriz.length; c++) {   
+                String value = " ";
+                   
+                if(matriz[l][c].celula() == Celula.caminho)
+                    value = String.valueOf(matriz[l][c].valor); 
+                
+                while(value.length() < lenghtMaior)
+                    value = value + " ";
+                
+                labirinto = labirinto + value + "|";
+            }
+            labirinto = labirinto + "\n"; 
+        }        
+        return labirinto;
+    }
+    
 }
 
 
