@@ -11,10 +11,23 @@ public class Vertice {
     public List<Vertice> adj;
     public Vertice antecessor;
     
+    Vertice() {
+        this(0);
+    }
+    
     Vertice(int valor) {
         this.valor = valor;
+        d = 0;
         cor = Cor.Branco;
         adj = new ArrayList<>();
+        antecessor = null;
+    }
+    
+    public Celula celula() {
+        if(valor > 0)
+            return Celula.caminho;
+        else 
+            return Celula.parede;
     }
   
 }

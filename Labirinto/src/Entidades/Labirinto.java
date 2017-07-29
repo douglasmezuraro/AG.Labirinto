@@ -34,7 +34,7 @@ public class Labirinto {
         List<Vertice> lista = new ArrayList<>();        
         for(int l = 0; l < matriz.length; l++) {
             for(int c = 0; c < matriz.length; c++) {
-                matriz[l][c] = new Vertice(0);
+                matriz[l][c] = new Vertice();
                 lista.add(matriz[l][c]);
             }
         }

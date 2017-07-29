@@ -66,7 +66,7 @@ public class Grafo {
     private Boolean validarJogada(Vertice u) {
         for(Vertice v: u.adj) 
             if(!v.equals(u.antecessor)) 
-                if (v.valor > 0) 
+                if(v.celula() == Celula.caminho) 
                     return false;        
         return true;
     }
@@ -92,15 +92,14 @@ public class Grafo {
             
             for(Vertice v: u.adj) {
                 if(v.cor == Cor.Branco) {
-                    if(v.valor > 0) {
+                    if(v.celula() == Celula.caminho) {
                         v.d = u.d + 1;
                         v.antecessor = u;
                         v.cor = Cor.Cinza;
                         q.add(v);
                     }
                 }
-            }
-            
+            }            
             u.cor = Cor.Preto;
         }                
     }

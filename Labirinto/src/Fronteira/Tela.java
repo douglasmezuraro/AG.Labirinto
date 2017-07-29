@@ -6,9 +6,8 @@ import java.util.Scanner;
 public class Tela {
     
     public static int perguntarVertice(String pergunta) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println(pergunta);
-        return scanner.nextInt();
+        return new Scanner(System.in).nextInt();
     }
     
     public static void main(String[] args) {        
@@ -23,7 +22,7 @@ public class Tela {
         
         int destino = perguntarVertice("Digite o destino: ");
         
-        System.out.println("Caminho: " + labirinto.getCaminho(origem, destino));                
+        System.out.println("\nCaminho: " + labirinto.getCaminho(origem, destino));                
     }
     
 }
