@@ -2,8 +2,8 @@ package Entidades;
 
 public class Aresta {
     
-    private Vertice origem;
-    private Vertice destino;
+    public Vertice origem;
+    public Vertice destino;
     
     Aresta(Vertice origem, Vertice destino) {
         this.origem = origem;

@@ -9,29 +9,13 @@ import java.util.Queue;
 public class Grafo {    
     
     public final int infinito = -1;
-    private List<Aresta> arestas;
-    private List<Vertice> vertices;    
-    int d;
+    public List<Aresta> arestas;
+    public List<Vertice> vertices;    
+    private int d;
 
     Grafo() {
         arestas = new ArrayList<>();
         vertices = new ArrayList<>();
-    }
-    
-    public List<Aresta> getArestas() {
-        return arestas;
-    }
-
-    public void setArestas(List<Aresta> arestas) {
-        this.arestas = arestas;
-    }
-
-    public List<Vertice> getVertices() {
-        return vertices;
-    }
-
-    public void setVertices(List<Vertice> vertices) {
-        this.vertices = vertices;
     }
     
     Vertice addVertice(int valor) {
@@ -50,28 +34,28 @@ public class Grafo {
     
     public void dfs() {
         for(Vertice u: vertices) {
-            u.setCor(Cor.Branco);
-            u.setAntecessor(null);
+            u.cor = Cor.Branco;
+            u.antecessor = null;
         }
         
         d = 0;
         
         for(Vertice v: vertices) {
-            if(v.getCor() == Cor.Branco)
+            if(v.cor == Cor.Branco)
                 dfsVisit(v);
         }
     }
     
     private void dfsVisit(Vertice u) {
-        u.setCor(Cor.Cinza);
+        u.cor = Cor.Cinza;
         
-        for(Vertice v: u.getAdj()) {
-            if(v.getCor() == Cor.Branco) {
-                v.setAntecessor(u); 
+        for(Vertice v: u.adj) {
+            if(v.cor == Cor.Branco) {
+                v.antecessor = u; 
 
                 if(validarJogada(v)) {
                     d++;
-                    v.setValor(d);
+                    v.valor = d;
                     dfsVisit(v);
                 }
             }               
@@ -79,9 +63,9 @@ public class Grafo {
     }
     
     private Boolean validarJogada(Vertice u) {
-        for(Vertice v: u.getAdj()) 
-            if(!v.equals(u.getAntecessor())) 
-                if (v.getValor() > 0) 
+        for(Vertice v: u.adj) 
+            if(!v.equals(u.antecessor)) 
+                if (v.valor > 0) 
                     return false;        
         return true;
     }
@@ -94,15 +78,15 @@ public class Grafo {
     private void bfs(Vertice s) {
         for(Vertice v: vertices) {
             if(!v.equals(v)) {
-                v.setD(infinito);
-                v.setAntecessor(null);
-                v.setCor(Cor.Branco);                
+                v.d = infinito;
+                v.antecessor = null;
+                v.cor = Cor.Branco;                
             }            
         }
         
-        s.setD(0);
-        s.setAntecessor(null);
-        s.setCor(Cor.Cinza);
+        s.d = 0;
+        s.antecessor = null;
+        s.cor = Cor.Cinza;
         
         Queue<Vertice> q = new LinkedList<>();        
         q.add(s);
@@ -110,16 +94,16 @@ public class Grafo {
         while(!q.isEmpty()) {
             Vertice u = q.remove();
             
-            for(Vertice v: u.getAdj()) {
-                if(v.getCor() == Cor.Branco) {
-                    v.setD(u.getD() + 1);
-                    v.setAntecessor(u);
-                    v.setCor(Cor.Cinza);
+            for(Vertice v: u.adj) {
+                if(v.cor == Cor.Branco) {
+                    v.d = u.d + 1;
+                    v.antecessor = u;
+                    v.cor = Cor.Cinza;
                     q.add(v);
                 }
             }
             
-            u.setCor(Cor.Preto);
+            u.cor = Cor.Preto;
         }                
     }
 

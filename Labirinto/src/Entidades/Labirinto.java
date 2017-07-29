@@ -20,8 +20,7 @@ public class Labirinto {
     public Labirinto(int tamanho) {
         matriz = new Vertice[tamanho][tamanho];
         grafo = new Grafo();
-      
-        grafo.setVertices(criarVertices());
+        grafo.vertices = criarVertices();
         
         addAdjacentes();
     }
@@ -44,7 +43,7 @@ public class Labirinto {
     private void addAdjacentes() {
         for(int l = 0; l < matriz.length; l++) 
             for(int c = 0; c < matriz.length; c++) 
-                matriz[l][c].setAdj(getAdjacentes(matriz[l][c]));
+                matriz[l][c].adj = getAdjacentes(matriz[l][c]);
     }
     
     private List<Vertice> getAdjacentes(Vertice u) {
@@ -114,7 +113,7 @@ public class Labirinto {
         String labirinto = "";
         for(int l = 0; l < matriz.length; l++) {
             for(int c = 0; c < matriz.length; c++) {
-                int aux = matriz[l][c].getValor();
+                int aux = matriz[l][c].valor;
                           
                 if(aux == 0)                   
                     labirinto = labirinto + "  |";
