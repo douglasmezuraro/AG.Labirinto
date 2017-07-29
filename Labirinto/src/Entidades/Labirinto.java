@@ -47,7 +47,7 @@ public class Labirinto {
         List<Vertice> adj = new ArrayList<>();
         
         for(Direcao direcao: Direcao.values()) {
-            Vertice v = getVerticeByDirecao(u, direcao);
+            Vertice v = getVertice(u, direcao);
             
             if(v != null)
                adj.add(v);        
@@ -67,21 +67,21 @@ public class Labirinto {
         return null;
     }
     
-    private Vertice getVerticeByPosicao(Point p){
-        if(posicaoExiste(p))
-            return matriz[p.x][p.y];
-        else
-            return null;
-    }
-    
     private boolean posicaoExiste(Point p) {
         return (p.x >= 0) 
             && (p.y >= 0)
             && (p.x < matriz.length)
             && (p.y < matriz.length);
     }
-      
-    private Vertice getVerticeByDirecao(Vertice u, Direcao direcao) {
+    
+    private Vertice getVertice(Point p){
+        if(posicaoExiste(p))
+            return matriz[p.x][p.y];
+        else
+            return null;
+    }
+        
+    private Vertice getVertice(Vertice u, Direcao direcao) {
         Point origem = getPosicaoVertice(u),
               destino = null;
         
@@ -100,7 +100,7 @@ public class Labirinto {
                     destino = new Point(origem.x, origem.y - 1);
                     break;
             }
-            return getVerticeByPosicao(destino);
+            return getVertice(destino);
         }
         else return null;
     }
@@ -133,14 +133,12 @@ public class Labirinto {
         return labirinto; 
     }
     
-    public String imprimirCaminho(int origem, int destino) {
-        Vertice source = getVertice(origem),
-                target = getVertice(destino);
-        
-        if((source != null) && (target != null))
-            return grafo.getCaminho(source, target);
-        else
-            return "Erro ao encontrar os vértices especificados.";
+    public String getCaminho(int origem, int destino) {
+        return getCaminho(getVertice(origem), getVertice(destino));
+    }
+    
+    private String getCaminho(Vertice origem, Vertice destino) {
+        return grafo.getCaminho(origem, destino);
     }
 }
 

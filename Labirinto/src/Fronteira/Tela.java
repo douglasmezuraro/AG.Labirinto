@@ -17,7 +17,7 @@ public class Tela {
         int origem = scanner.nextInt();
         System.out.println("Digite o destino: ");
         int destino = scanner.nextInt();
-        System.out.println(labirinto.imprimirCaminho(origem, destino));                
+        System.out.println(labirinto.getCaminho(origem, destino));                
     }
     
 }
