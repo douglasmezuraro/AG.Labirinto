@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Grafo {    
     
@@ -104,14 +105,37 @@ public class Grafo {
         }                
     }
     
-    public void imprimirCaminho(Vertice origem, Vertice destino) {
+    public String getCaminho(Vertice origem, Vertice destino) {
+        final String begin = "{",
+                       end = "}",
+                 separator = ", ";
+        
+        Stack<Integer> pilha = new Stack();
+        acharCaminho(pilha, origem, destino);
+        Collections.reverse(pilha);
+      
+        String aux = begin;
+        
+        while(!pilha.isEmpty()) {
+            if(aux.equals(begin))
+                aux = aux + pilha.pop();
+            else
+               aux = aux + separator + pilha.pop();
+        }
+        
+        aux = aux + end;
+        
+        return aux;
+    }
+    
+    private void acharCaminho(Stack pilha, Vertice origem, Vertice destino) {
         if(origem == destino) 
-            System.out.println(destino.valor);
+            pilha.add(destino.valor);
         else if(destino.antecessor == null)
-            System.out.println("Nenhum caminho existente entre '" + origem.valor + "' e '" + destino.valor + "'.");
+            pilha.add(-1);
         else {
-            imprimirCaminho(origem, destino.antecessor);
-            System.out.println(destino.valor);
+            acharCaminho(pilha, origem, destino.antecessor);
+            pilha.add(destino.valor);
         }  
     }
 }

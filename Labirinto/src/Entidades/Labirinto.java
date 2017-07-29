@@ -133,14 +133,14 @@ public class Labirinto {
         return labirinto; 
     }
     
-    public void imprimirCaminho(int origem, int destino) {
+    public String imprimirCaminho(int origem, int destino) {
         Vertice source = getVertice(origem),
                 target = getVertice(destino);
         
         if((source != null) && (target != null))
-            grafo.imprimirCaminho(source, target);
+            return grafo.getCaminho(source, target);
         else
-            System.out.println("Erro ao encontrar os vértices especificados.");
+            return "Erro ao encontrar os vértices especificados.";
     }
 }
 
