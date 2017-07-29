@@ -70,14 +70,9 @@ public class Grafo {
         return true;
     }
     
-    public void bfs() {
-        Collections.shuffle(vertices);
-        bfs(vertices.get(0));
-    }
-    
-    private void bfs(Vertice s) {
+    public void bfs(Vertice s) {
         for(Vertice v: vertices) {
-            if(!v.equals(v)) {
+            if(!v.equals(s)) {
                 v.d = infinito;
                 v.antecessor = null;
                 v.cor = Cor.Branco;                
@@ -96,15 +91,27 @@ public class Grafo {
             
             for(Vertice v: u.adj) {
                 if(v.cor == Cor.Branco) {
-                    v.d = u.d + 1;
-                    v.antecessor = u;
-                    v.cor = Cor.Cinza;
-                    q.add(v);
+                    if(v.valor > 0) {
+                        v.d = u.d + 1;
+                        v.antecessor = u;
+                        v.cor = Cor.Cinza;
+                        q.add(v);
+                    }
                 }
             }
             
             u.cor = Cor.Preto;
         }                
     }
-
+    
+    public void imprimirCaminho(Vertice origem, Vertice destino) {
+        if(origem == destino) 
+            System.out.println(destino.valor);
+        else if(destino.antecessor == null)
+            System.out.println("Nenhum caminho existente entre '" + origem.valor + "' e '" + destino.valor + "'.");
+        else {
+            imprimirCaminho(origem, destino.antecessor);
+            System.out.println(destino.valor);
+        }  
+    }
 }

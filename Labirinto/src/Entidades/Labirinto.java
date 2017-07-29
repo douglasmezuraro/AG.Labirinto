@@ -22,6 +22,10 @@ public class Labirinto {
         grafo.dfs();
     }
     
+    public void acharMenorCaminho() {
+        grafo.bfs(getVertice(1));
+    }
+    
     private List<Vertice> criarVertices() {
         List<Vertice> lista = new ArrayList<>();        
         for(int l = 0; l < matriz.length; l++) {
@@ -101,6 +105,14 @@ public class Labirinto {
         else return null;
     }
     
+    private Vertice getVertice(int valor) {
+        for(Vertice u: grafo.vertices) 
+            if(u.valor == valor) 
+                return u;
+             
+        return null;
+    }
+    
     @Override
     public String toString() {
         String labirinto = "";
@@ -118,7 +130,18 @@ public class Labirinto {
             labirinto = labirinto + "\n";            
         }        
         
-        return labirinto;
+        return labirinto; 
     }
     
+    public void imprimirCaminho(int origem, int destino) {
+        Vertice source = getVertice(origem),
+                target = getVertice(destino);
+        
+        if((source != null) && (target != null))
+            grafo.imprimirCaminho(source, target);
+        else
+            System.out.println("Erro ao encontrar os vértices especificados.");
+    }
 }
+
+
