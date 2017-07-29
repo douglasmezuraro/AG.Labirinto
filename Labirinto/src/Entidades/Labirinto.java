@@ -18,12 +18,16 @@ public class Labirinto {
         addAdjacentes();
     }
     
-    public void criarCaminho() {
+    public void dfs() {
         grafo.dfs();
     }
     
-    public void acharMenorCaminho() {
-        grafo.bfs(getVertice(1));
+    public void bfs(int valor) {
+        bfs(getVertice(valor));
+    }
+    
+    private void bfs(Vertice u) {
+        grafo.bfs(u);
     }
     
     private List<Vertice> criarVertices() {
@@ -58,12 +62,10 @@ public class Labirinto {
     }
                 
     private Point getPosicaoVertice(Vertice u) {
-        for(int l = 0; l < matriz.length; l++) {
-            for(int c = 0; c < matriz.length; c++) {
+        for(int l = 0; l < matriz.length; l++) 
+            for(int c = 0; c < matriz.length; c++) 
                 if(matriz[l][c].equals(u))
-                    return new Point(l, c);
-            }
-        }
+                    return new Point(l, c);          
         return null;
     }
     
