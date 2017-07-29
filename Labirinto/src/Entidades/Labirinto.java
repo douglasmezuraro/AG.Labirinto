@@ -6,14 +6,7 @@ import java.util.Collections;
 import java.awt.Point;
 
 public class Labirinto {
-    
-    private enum Direcao {
-        cima,
-        baixo,
-        direita,
-        esquerda;
-    }
-    
+   
     private final Vertice[][] matriz;
     private final Grafo grafo;
     
