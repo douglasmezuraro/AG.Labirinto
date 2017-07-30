@@ -107,12 +107,12 @@ public class Labirinto {
         else return null;
     }
     
-    private Vertice getVertice(int valor) {
+    private Vertice getVertice(int valor) throws IndexOutOfBoundsException {
         for(Vertice u: grafo.vertices) 
             if(u.valor == valor) 
                 return u;
              
-        return null;
+       throw new IndexOutOfBoundsException(); 
     }
     
     public String getCaminho(int origem, int destino) {
