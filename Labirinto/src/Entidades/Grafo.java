@@ -31,6 +31,16 @@ public class Grafo {
         return a;
     }
     
+    public Vertice verticeDeMaiorValor() {
+        Vertice u = new Vertice();
+        
+        for(Vertice v: vertices) 
+            if(v.valor > u.valor)
+                u = v;
+        
+        return u;
+    }
+    
     // Algoritmos
     
     public void dfs() {
@@ -68,7 +78,7 @@ public class Grafo {
     private Boolean validarJogada(Vertice u) {
         for(Vertice v: u.adj) 
             if(!v.equals(u.antecessor)) 
-                if(v.getCelula().equals(Celula.caminho)) 
+                if(v.getCelula() == Celula.caminho) 
                     return false;        
         return true;
     }
@@ -106,45 +116,40 @@ public class Grafo {
         }                
     }
     
-    public String getCaminho(Vertice origem, Vertice destino) {
-        final String begin = "{",
-                       end = "}",
-                 separator = ", ";
-        
-        Stack<Integer> pilha = new Stack();
-        acharCaminho(pilha, origem, destino);
-        Collections.reverse(pilha);
-      
-        String aux = begin;
-        
-        while(!pilha.isEmpty()) {
-            if(aux.equals(begin))
-                aux = aux + pilha.pop();
-            else
-               aux = aux + separator + pilha.pop();
+    public String getCaminho(Vertice origem, Vertice destino) {        
+        try {
+            final String begin = "{",
+                           end = "}",
+                     separator = ", ";
+
+            Stack<Integer> pilha = new Stack();
+            acharCaminho(pilha, origem, destino);
+
+            String aux = begin;
+            
+            Collections.reverse(pilha);
+            while(!pilha.isEmpty()) {
+                if(aux.equals(begin))
+                    aux = aux + pilha.pop();
+                else
+                   aux = aux + separator + pilha.pop();
+            }
+
+            return aux + end;
+        } catch(NullPointerException e) {
+            return e.getMessage();
         }
-               
-        return aux + end;
     }
     
-    private void acharCaminho(Stack pilha, Vertice origem, Vertice destino) {
+    private void acharCaminho(Stack pilha, Vertice origem, Vertice destino) throws NullPointerException {
         if(origem == destino) 
-            pilha.add(destino.valor);
-        else if(destino.antecessor == null)
-            pilha.add(-1);
+            pilha.add(origem.valor);
+        else if((origem == null) || (destino == null) || (destino.antecessor == null))
+            throw new NullPointerException("Nao foi encontrado caminho.");
         else {
             acharCaminho(pilha, origem, destino.antecessor);
             pilha.add(destino.valor);
         }  
     }
     
-    public Vertice verticeDeMaiorValor() {
-        Vertice u = new Vertice();
-        
-        for(Vertice v: vertices) 
-            if(v.valor > u.valor)
-                u = v;
-        
-        return u;
-    }
 }

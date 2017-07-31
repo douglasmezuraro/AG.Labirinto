@@ -13,9 +13,10 @@ public class Labirinto {
     public Labirinto(int tamanho) {
         matriz = new Vertice[tamanho][tamanho];
         grafo = new Grafo();
-        grafo.vertices = criarVertices();
-        
-        addAdjacentes();
+      
+        criarVertices();
+        grafo.vertices = getVertices(); 
+        adicionarAdjacentes();
     }
     
     public void dfs() {
@@ -30,35 +31,40 @@ public class Labirinto {
         grafo.bfs(u);
     }
     
-    private List<Vertice> criarVertices() {
-        List<Vertice> lista = new ArrayList<>();        
-        for(int l = 0; l < matriz.length; l++) {
-            for(int c = 0; c < matriz.length; c++) {
+    private void criarVertices() {      
+        for(int l = 0; l < matriz.length; l++)
+            for(int c = 0; c < matriz.length; c++)
                 matriz[l][c] = new Vertice();
-                lista.add(matriz[l][c]);
-            }
-        }
-        return lista;
     }
     
-    private void addAdjacentes() {
+    private List<Vertice> getVertices() {
+        List<Vertice> list = new ArrayList<>();        
+       
+        for(int l = 0; l < matriz.length; l++) 
+            for(int c = 0; c < matriz.length; c++) 
+                list.add(matriz[l][c]);
+     
+        return list;
+    }
+    
+    private void adicionarAdjacentes() {
         for(int l = 0; l < matriz.length; l++) 
             for(int c = 0; c < matriz.length; c++) 
                 matriz[l][c].adj = getAdjacentes(matriz[l][c]);
     }
     
     private List<Vertice> getAdjacentes(Vertice u) {
-        List<Vertice> adj = new ArrayList<>();
+        List<Vertice> list = new ArrayList<>();
         
         for(Direcao direcao: Direcao.values()) {
             Vertice v = getVertice(u, direcao);
             
             if(v != null)
-               adj.add(v);        
+               list.add(v);        
         }
         
-        Collections.shuffle(adj);
-        return adj;        
+        Collections.shuffle(list);
+        return list;        
     }
                 
     private Point getPosicaoVertice(Vertice u) {
@@ -107,12 +113,12 @@ public class Labirinto {
         else return null;
     }
     
-    private Vertice getVertice(int valor) throws IndexOutOfBoundsException {
+    private Vertice getVertice(int valor) {
         for(Vertice u: grafo.vertices) 
             if(u.valor == valor) 
                 return u;
              
-       throw new IndexOutOfBoundsException(); 
+        return null; 
     }
     
     public String getCaminho(int origem, int destino) {
@@ -142,6 +148,7 @@ public class Labirinto {
             }
             labirinto = labirinto + "\n"; 
         }        
+        
         return labirinto;
     }
     
