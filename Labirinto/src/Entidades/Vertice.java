@@ -23,7 +23,7 @@ public class Vertice {
         antecessor = null;
     }
     
-    public Celula celula() {
+    public Celula getCelula() {
         if(valor > 0)
             return Celula.caminho;
         else 

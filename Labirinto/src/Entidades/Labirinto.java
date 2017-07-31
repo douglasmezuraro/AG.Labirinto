@@ -132,7 +132,7 @@ public class Labirinto {
             for(int c = 0; c < matriz.length; c++) {   
                 String value = " ";
                    
-                if(matriz[l][c].celula() == Celula.caminho)
+                if(matriz[l][c].getCelula() == Celula.caminho)
                     value = String.valueOf(matriz[l][c].valor); 
                 
                 while(value.length() < lenghtMaior)
