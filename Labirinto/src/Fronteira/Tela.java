@@ -42,17 +42,18 @@ public class Tela {
     }
     
     private static void encontrarCaminho() {
-        int origem, destino;
+        int origem = perguntarNumeroInteiro("Digite a origem:");
+        int destino = perguntarNumeroInteiro("Digite o destino:");          
         
-        origem = perguntarNumeroInteiro("Digite a origem:");
-        destino = perguntarNumeroInteiro("Digite o destino:");
-        
-        labirinto.bfs(origem);
-        
-        System.out.println(sLineBreak + 
-                           "Caminho: " + 
-                           labirinto.getCaminho(origem, destino) + 
-                           sLineBreak);            
+        try {
+            labirinto.bfs(origem);
+            System.out.println(sLineBreak + 
+                               "Caminho: " + 
+                               labirinto.getCaminho(origem, destino) + 
+                               sLineBreak);              
+        } catch(NullPointerException e) {
+            System.out.println(e.getMessage());
+        }        
     }
     
     public static void printCabecario() {        
@@ -82,8 +83,8 @@ public class Tela {
             encontrarCaminho();
         } while(perguntarNumeroInteiro(
             "Deseja encontrar outro caminho?" + sLineBreak +
-            "  == 0 : Nao" + sLineBreak +
-            "  != 0 : Sim" + sLineBreak +
+            "  == 0 : Nao                   " + sLineBreak +
+            "  != 0 : Sim                   " + sLineBreak +
             "Resposta: ") != 0);
     }
     

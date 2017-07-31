@@ -169,12 +169,12 @@ public class Labirinto {
      * @param valor
      * @return vértice caso exista, null caso contrário
      */
-    private Vertice getVertice(int valor) {
+    private Vertice getVertice(int valor) throws NullPointerException {
         for(Vertice u: grafo.vertices) 
             if(u.valor == valor) 
                 return u;
              
-        return null; 
+        throw new NullPointerException("Erro: Vértice '" + valor + "' não encontrado!");
     }
     
     /**
