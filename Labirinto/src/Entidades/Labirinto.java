@@ -31,12 +31,19 @@ public class Labirinto {
         grafo.bfs(u);
     }
     
+    /**
+     * Método que cria os vértices da matriz passeando por cada posição
+     */
     private void criarVertices() {      
         for(int l = 0; l < matriz.length; l++)
             for(int c = 0; c < matriz.length; c++)
                 matriz[l][c] = new Vertice();
     }
     
+    /**
+     * Método que retorna uma lista dos vértices que compõe a matriz
+     * @return lista de vértices
+     */
     private List<Vertice> getVertices() {
         List<Vertice> list = new ArrayList<>();        
        
@@ -47,12 +54,22 @@ public class Labirinto {
         return list;
     }
     
+    /**
+     * Método que passeia na matriz e para cada posição atribui seus adjacentes 
+     * através do método "getAdjacentes()"
+     */
     private void adicionarAdjacentes() {
         for(int l = 0; l < matriz.length; l++) 
             for(int c = 0; c < matriz.length; c++) 
                 matriz[l][c].adj = getAdjacentes(matriz[l][c]);
     }
     
+    /**
+     * Método que retorna uma lista com os vértices adjacentes do vértice "u" que
+     * é passado como parâmetro
+     * @param u
+     * @return lista de adjacentes de "u"
+     */
     private List<Vertice> getAdjacentes(Vertice u) {
         List<Vertice> list = new ArrayList<>();
         
@@ -66,7 +83,12 @@ public class Labirinto {
         Collections.shuffle(list);
         return list;        
     }
-                
+    
+    /**
+     * Método que retorna a coordenada do vértice "u" na matriz
+     * @param u
+     * @return coordenada de "u"
+     */
     private Point getPosicaoVertice(Vertice u) {
         for(int l = 0; l < matriz.length; l++) 
             for(int c = 0; c < matriz.length; c++) 
@@ -75,6 +97,11 @@ public class Labirinto {
         return null;
     }
     
+    /**
+     * Método que verifica se a coordenada "p" está dentro dos limites da matriz
+     * @param p
+     * @return resultado da verificação
+     */
     private boolean posicaoExiste(Point p) {
         return (p.x >= 0) 
             && (p.y >= 0)
@@ -82,13 +109,25 @@ public class Labirinto {
             && (p.y < matriz.length);
     }
     
+    /**
+     * Método que retorna o vértice da matriz através de sua posição
+     * @param p
+     * @return vértice caso exista, null caso contrário
+     */
     private Vertice getVertice(Point p){
         if(posicaoExiste(p))
             return matriz[p.x][p.y];
         else
             return null;
     }
-        
+    
+    /**
+     * Método que retorna o vértice adjacente do vértice u  na direção passada 
+     * como parâmetro da matriz
+     * @param u
+     * @param direcao
+     * @return vértice caso exista, null caso contrário
+     */
     private Vertice getVertice(Vertice u, Direcao direcao) {
         Point origem = getPosicaoVertice(u),
               destino = null;
@@ -113,6 +152,11 @@ public class Labirinto {
         else return null;
     }
     
+    /**
+     * Método que retorna o vértice que tem o valor passado como parâmetro
+     * @param valor
+     * @return vértice caso exista, null caso contrário
+     */
     private Vertice getVertice(int valor) {
         for(Vertice u: grafo.vertices) 
             if(u.valor == valor) 
@@ -121,14 +165,31 @@ public class Labirinto {
         return null; 
     }
     
+    /**
+     * Método que retorna o caminho entre os vértices passado como parâmetro.
+     * Este método é um overload que foi feito pelo motivo que o usuário só tem
+     * acesso ao valor dos vértices
+     * @param origem
+     * @param destino
+     * @return caminho entre os vértices
+     */
     public String getCaminho(int origem, int destino) {
         return getCaminho(getVertice(origem), getVertice(destino));
     }
     
+    /**
+     * Método que retorna o caminho entre os vértices passado como parâmetro
+     * @param origem
+     * @param destino
+     * @return caminho entre os vértices
+     */
     private String getCaminho(Vertice origem, Vertice destino) {
         return grafo.getCaminho(origem, destino);
     }
     
+    /**
+     * @return o labirinto em forma de String 
+     */
     @Override
     public String toString() {
         String labirinto = "";
