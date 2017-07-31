@@ -19,14 +19,26 @@ public class Labirinto {
         adicionarAdjacentes();
     }
     
+    /**
+     * Método que chama a busca em profundidade no grafo
+     */
     public void dfs() {
         grafo.dfs();
     }
     
+    /**
+     * Método que chama a busca em largura no grafo a partir do vértice com o 
+     * valor passado como parâmetro
+     * @param valor 
+     */
     public void bfs(int valor) {
         bfs(getVertice(valor));
     }
     
+    /**
+     * Método que chama a busca em largura no grafo a partir do vértice passado como parâmetro
+     * @param u 
+     */
     private void bfs(Vertice u) {
         grafo.bfs(u);
     }
@@ -61,7 +73,7 @@ public class Labirinto {
     private void adicionarAdjacentes() {
         for(int l = 0; l < matriz.length; l++) 
             for(int c = 0; c < matriz.length; c++) 
-                matriz[l][c].adj = getAdjacentes(matriz[l][c]);
+                matriz[l][c].adjacentes = getAdjacentes(matriz[l][c]);
     }
     
     /**
@@ -214,5 +226,3 @@ public class Labirinto {
     }
     
 }
-
-

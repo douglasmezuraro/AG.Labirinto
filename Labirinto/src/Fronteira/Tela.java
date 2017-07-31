@@ -8,6 +8,30 @@ public class Tela {
     
     private static Labirinto labirinto;
     private static final String sLineBreak = "\n";
+
+    /**
+     * Método que printa a pergunta passada como parâmetro e retorna um valor
+     * inteiro que o usuário digite 
+     * @param pergunta
+     * @return valor inteiro
+     */
+    public static int perguntarNumeroInteiro(String pergunta) {
+        Scanner scanner = new Scanner(System.in);
+        Boolean sucess = false;
+        int result = 0;
+        
+        System.out.println(pergunta);
+        while(!sucess) {
+            try {
+                result = scanner.nextInt();
+                sucess = true;
+            } catch(InputMismatchException e) {
+                System.err.println("Erro: Tipo inválido, somente números inteiros. Digite novamente!");
+                scanner.next();
+            }
+        }
+        return result;
+    }
     
     private static void criarLabirinto(int tamanho) {
         labirinto = new Labirinto(tamanho);
@@ -46,24 +70,6 @@ public class Tela {
     
     public static void printLabirinto() {
         System.out.println(labirinto.toString());
-    }
-    
-    public static int perguntarNumeroInteiro(String pergunta) {
-        Scanner scanner = new Scanner(System.in);
-        Boolean sucess = false;
-        int result = 0;
-        
-        System.out.println(pergunta);
-        while(!sucess) {
-            try {
-                result = scanner.nextInt();
-                sucess = true;
-            } catch(InputMismatchException e) {
-                System.err.println("Erro: Tipo inválido, somente números inteiros. Digite novamente!");
-                scanner.next();
-            }
-        }
-        return result;
     }
     
     public static void main(String[] args) {
